@@ -1,0 +1,44 @@
+{
+  "Machines":
+  [
+    {
+      "nom": "Machine4",
+      "hostname": "monitorme1.ddns.net",
+      "port": 22,
+      "log_path": "/var/log/apache2",
+      "username": "interfadm",
+      "password": "Projet654!"
+    },
+    {
+      "nom": "Machine4",
+      "hostname": "monitorme2.ddns.net",
+      "port": 22,
+      "log_path": "/var/log/apache2",
+      "username": "interfadm",
+      "password": "Projet654!"
+    },
+    {
+      "nom": "Machine4",
+      "hostname": "monitorme3.ddns.net",
+      "port": 22,
+      "log_path": "/var/log/apache2",
+      "username": "interfadm",
+      "password": "Projet654!"
+    },
+    {
+      "nom": "Machine4",
+      "hostname": "161.3.160.40",
+      "port": 22,
+      "log_path": "/var/log/apache2",
+      "username": "interfadm",
+      "password": "Projet654!"
+    },
+    {
+      "nom": "defense",
+      "hostname": "defense1.hopto.org",
+      "port": 22,
+      "log_path": "/var/log/apache2",
+      "username": "interfadm",
+      "password": "Projet654!"
+    }
+  ]}

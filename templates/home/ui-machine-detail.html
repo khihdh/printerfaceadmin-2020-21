@@ -1,0 +1,320 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* width */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+    </style>
+</head>
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-8">
+        <div class="card card-chart">
+            <div class="card-header ">
+                <div class="row">
+                    <div style="margin-left: 5%; margin-right: 5%">
+                        <h2 class="card-title">Machine :</h2>
+                    </div>
+                    <div>
+                        <h2 class="card-title" id="machine_name" style="color: #faac10"></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card card-chart">
+            <div class="card-header ">
+                <div class="row">
+                    <div style="margin-left: 10%; margin-right: 20%">
+                        <h2 class="card-title">Status</h2>
+                    </div>
+                    <div class="col-sm-6 text-left" style=" max-width: 20%; ">
+                        <button id="status" style="height: 30px; line-height: 10px; width: 30px; border-radius: 50%; background-color: red;"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card card-chart">
+            <div class="card-header ">
+                <div class="row">
+                    <div class="col-sm-6 text-left">
+                        <h2 class="card-title">Memory</h2>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="MemoryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card card-chart">
+            <div class="card-header">
+                <h5 class="card-category">Memory shared</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-area">
+                    <canvas id="MemorySharedChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card card-chart">
+            <div class="card-header">
+                <h5 class="card-category">Memory buffer cache</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-area">
+                    <canvas id="MemoryBuffChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card card-chart">
+            <div class="card-header">
+                <h5 class="card-category">Memory available</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-area">
+                    <canvas id="MemoryAvailableChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <div class="card card-chart">
+            <div class="card-header ">
+                <div class="row">
+                    <div class="col-sm-6 text-left">
+                        <h2 class="card-title">Memory</h2>
+                        <h5 class="card-category">Swap In</h5>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="SwapInChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card card-chart">
+            <div class="card-header ">
+                <div class="row">
+                    <div class="col-sm-6 text-left">
+                        <h2 class="card-title">Memory</h2>
+                        <h5 class="card-category">Swap Out</h5>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="SwapOutChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <div class="card card-chart">
+            <div class="card-header ">
+                <div class="row">
+                    <div class="col-sm-6 text-left">
+                        <h2 class="card-title">Disk</h2>
+                        <h5 class="card-category">Block In</h5>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="BlockInChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card card-chart">
+            <div class="card-header ">
+                <div class="row">
+                    <div class="col-sm-6 text-left">
+                        <h2 class="card-title">Disk</h2>
+                        <h5 class="card-category">Block Out</h5>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="BlockOutChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-12">
+    <div class="card card-chart">
+        <div class="card-header ">
+            <div class="row">
+                <div class="col-sm-6 text-left">
+                    <h2 class="card-title">CPU</h2>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="chart-area">
+                    <canvas id="CPUChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6 col-md-12">
+        <div class="card ">
+            <div class="card-header">
+                <h4 class="card-title"> Error </h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table tablesorter ">
+                        <thead class=" text-primary" style=" display:block;">
+                            <tr>
+                                <th>
+                                    Date
+                                </th>
+                                <th>
+
+                                </th>
+                                <th>
+
+                                </th>
+                                <th>
+                                    Pid
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="tableError" style=" display:block;height: 200px; overflow-y: auto; overflow-x: hidden;">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-12">
+        <div class="card ">
+            <div class="card-header">
+                <h4 class="card-title"> Log </h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table tablesorter ">
+                        <thead class=" text-primary" style=" display:block;">
+                            <tr>
+                                <th>
+                                    Ip
+                                </th>
+                                <th>
+
+                                </th>
+                                <th>
+
+                                </th>
+                                <th>
+                                    Path
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="tableLog" style=" display:block;height: 200px;overflow-y: auto;overflow-x: hidden;">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6 col-md-12">
+        <div class="card ">
+            <div class="card-header">
+                <h4 class="card-title"> Process </h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table tablesorter ">
+                        <tbody id="tableProcess" style=" display:block;height: 300px;overflow-y: auto;overflow-x: hidden;">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-12">
+        <div class="card ">
+            <div class="card-header">
+                <h4 class="card-title"> Current Process </h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table tablesorter">
+                        <tbody id="tableCurrentProcess" style=" display:block;height: 300px;overflow-y: auto;overflow-x: hidden;">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+
+<script>
+    $(document).ready(function () {
+        // Javascript method's body can be found in assets/js/demos.js
+        demo.initDashboardPageCharts();
+    });
+</script>
+{% endblock javascripts %}
